@@ -1,0 +1,13 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+
+# Visual Studio
+.vs/
+*.sln
+*.suo
+
+# Archivos temporales
+*.log
+*.tmp

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title> Nails — Estudio de Uñas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+
+<!-- NAVEGACIÓN -->
+<nav class="nav">
+  <div class="logo">M & <span>Nails</span></div>
+  <ul class="nav-links">
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#galeria">Galería</a></li>
+    <li><a href="#reservar">Reservar</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+  <a href="#reservar" class="btn-nav">Reservar cita</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-text">
+      <p class="hero-tag">Estudio de uñas — Soacha, Colombia</p>
+      <h1 class="hero-title">Arte en cada<br><em>detalle</em></h1>
+      <p class="hero-sub">Diseños únicos creados con amor y precisión. Desde uñas clásicas hasta nail art exclusivo, cada cita es una experiencia de lujo.</p>
+      <a href="#reservar" class="btn-primary">Reservar cita</a>
+      <a href="#galeria" class="btn-outline">Ver galería</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="nail-card"><div class="nail-bg n1"><span>French Rose</span></div><div class="nail-card-overlay"></div><div class="nail-label">French Rose - Rosa Frances</div></div>
+    <div class="nail-card"><div class="nail-bg n2"><span>Midnight</span></div><div class="nail-card-overlay"></div><div class="nail-label">Midnight Luxe - Lujo De Medianoche</div></div>
+    <div class="nail-card"><div class="nail-bg n3"><span>Gold Foil</span></div><div class="nail-card-overlay"></div><div class="nail-label">Yellow & Gold Art - Arte Amarillo y Dorado</div></div>
+    <div class="nail-card"><div class="nail-bg n4"><span>Sage Mist</span></div><div class="nail-card-overlay"></div><div class="nail-label">Green Oasis - Oasis Verde</div></div>
+  </div>
+</section>
+
+<!-- SERVICIOS -->
+<section class="section" id="servicios">
+  <p class="section-tag">Lo que ofrecemos</p>
+  <h2 class="section-title">Nuestros servicios</h2>
+  <div class="divider"></div>
+  <div class="services-grid">
+    {% for s in servicios %}
+    <div class="service-item">
+      <div class="service-icon"><i class="ti {{ s.icono }}"></i></div>
+      <div class="service-name">{{ s.nombre }}</div>
+      <div class="service-desc">{{ s.descripcion }}</div>
+      <div class="service-price">{{ s.precio }}</div>
+      <div class="service-duration"><i class="ti ti-clock"></i> {{ s.duracion }}</div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<!-- GALERÍA -->
+<section class="gallery-section" id="galeria">
+  <p class="section-tag" style="color:var(--gold-light)">Inspiración</p>
+  <h2 class="section-title" style="color:#fff">Galería de diseños</h2>
+  <p class="gallery-sub">Explora nuestros trabajos más recientes. Cada diseño es único y creado especialmente para cada clienta.</p>
+  <div class="gallery-grid">
+    {% for item in galeria %}
+      {% if loop.index == 1 %}
+      <div class="gcard tall">
+        <div class="gpattern {{ item.clase }}"><div class="dot-pattern"></div></div>
+        <div class="g-label">{{ item.nombre }}</div>
+      </div>
+      <div class="gcol">
+      {% elif loop.index == 4 %}
+      </div>
+      <div class="gcol">
+      {% endif %}
+      {% if loop.index > 1 %}
+      <div class="gbox">
+        <div class="gpattern {{ item.clase }}"><div class="dot-pattern"></div></div>
+        <div class="g-label {% if item.clase == 'g5' %}dark{% endif %}">{{ item.nombre }}</div>
+      </div>
+      {% endif %}
+      {% if loop.last %}</div>{% endif %}
+    {% endfor %}
+  </div>
+</section>
+
+<!-- RESERVAS -->
+<section class="booking-section" id="reservar">
+  <div class="booking-form">
+    <p class="section-tag">Agenda tu cita</p>
+    <h2 class="section-title">Reserva online</h2>
+    <div class="divider"></div>
+    <div id="form-msg" class="form-msg hidden"></div>
+    <div class="form-group">
+      <label class="form-label">Nombre completo</label>
+      <input type="text" id="nombre" class="form-input" placeholder="Tu nombre" />
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Teléfono / WhatsApp</label>
+        <input type="tel" id="telefono" class="form-input" placeholder="+57 300 000 0000" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Correo electrónico</label>
+        <input type="email" id="email" class="form-input" placeholder="tu@correo.com" />
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Servicio</label>
+        <select id="servicio" class="form-input form-select">
+          {% for s in servicios %}
+          <option>{{ s.nombre }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Fecha deseada</label>
+        <input type="date" id="fecha" class="form-input" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Notas adicionales</label>
+      <textarea id="notas" class="form-input" rows="3" placeholder="¿Tienes algún diseño en mente?"></textarea>
+    </div>
+    <button class="btn-book" onclick="enviarReserva()">
+      Solicitar cita <i class="ti ti-arrow-right"></i>
+    </button>
+  </div>
+
+  <!-- INFO CONTACTO -->
+  <div class="booking-info" id="contacto">
+    <p class="section-tag">Información</p>
+    <h2 class="section-title" style="font-size:1.8rem">Encuéntranos</h2>
+    <div class="divider"></div>
+    <div class="info-item">
+      <div class="info-icon"><i class="ti ti-map-pin"></i></div>
+      <div>
+        <div class="info-title">Ubicación</div>
+        <div class="info-text">{{ contacto.direccion }}</div>
+      </div>
+    </div>
+    <div class="info-item">
+      <div class="info-icon"><i class="ti ti-clock"></i></div>
+      <div>
+        <div class="info-title">Horario</div>
+        <div class="info-text">{{ contacto.horario }}</div>
+      </div>
+    </div>
+    <div class="info-item">
+      <div class="info-icon"><i class="ti ti-brand-whatsapp"></i></div>
+      <div>
+        <div class="info-title">WhatsApp</div>
+        <div class="info-text">{{ contacto.whatsapp }}</div>
+      </div>
+    </div>
+    <div class="info-item">
+      <div class="info-icon">%</div>
+      <div>
+        <div class="info-title">Primer servicio</div>
+        <div class="info-text">20% de descuento en tu primera visita. Cancelaciones con 24h de anticipación.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REDES SOCIALES -->
+<div class="contact-bar">
+  <div>
+    <div class="social-label">Síguenos</div>
+    <div class="social-links">
+      <a href="#" class="social-link"><i class="ti ti-brand-instagram"></i></a>
+      <a href="#" class="social-link"><i class="ti ti-brand-tiktok"></i></a>
+      <a href="#" class="social-link"><i class="ti ti-brand-facebook"></i></a>
+      <a href="#" class="social-link"><i class="ti ti-brand-whatsapp"></i></a>
+    </div>
+  </div>
+  <div style="text-align:right">
+    <div class="contact-text"><span class="contact-highlight">{{ contacto.instagram }}</span> en Instagram y TikTok</div>
+    <div class="contact-text">Etiquétanos y obtén <span class="contact-highlight">10% de descuento</span> en tu próxima visita</div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-logo">M & <span>Nails</span></div>
+  <div class="footer-copy">© 2025 M & Nails Studio · Soacha, Colombia</div>
+</footer>
+
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
